@@ -18,6 +18,10 @@
 		1CEFFD6A16DA655B00CF2512 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1CEFFD6916DA655B00CF2512 /* Default-568h@2x.png */; };
 		1CEFFD6D16DA655B00CF2512 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CEFFD6C16DA655B00CF2512 /* ViewController.m */; };
 		1CEFFD7016DA655B00CF2512 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CEFFD6E16DA655B00CF2512 /* ViewController.xib */; };
+		1CEFFD7716DA657500CF2512 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CEFFD7616DA657500CF2512 /* CoreData.framework */; };
+		1CEFFD7D16DA66B100CF2512 /* RecordLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CEFFD7C16DA66B100CF2512 /* RecordLogic.m */; };
+		1CEFFD8016DA66EE00CF2512 /* ZDo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1CEFFD7E16DA66EE00CF2512 /* ZDo.xcdatamodeld */; };
+		1CEFFD8316DA674A00CF2512 /* Record.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CEFFD8216DA674A00CF2512 /* Record.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +41,12 @@
 		1CEFFD6B16DA655B00CF2512 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		1CEFFD6C16DA655B00CF2512 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		1CEFFD6F16DA655B00CF2512 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
+		1CEFFD7616DA657500CF2512 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		1CEFFD7B16DA66B100CF2512 /* RecordLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordLogic.h; sourceTree = "<group>"; };
+		1CEFFD7C16DA66B100CF2512 /* RecordLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordLogic.m; sourceTree = "<group>"; };
+		1CEFFD7F16DA66EE00CF2512 /* ZDo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ZDo.xcdatamodel; sourceTree = "<group>"; };
+		1CEFFD8116DA674A00CF2512 /* Record.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Record.h; sourceTree = "<group>"; };
+		1CEFFD8216DA674A00CF2512 /* Record.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Record.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1CEFFD7716DA657500CF2512 /* CoreData.framework in Frameworks */,
 				1CEFFD5416DA655B00CF2512 /* UIKit.framework in Frameworks */,
 				1CEFFD5616DA655B00CF2512 /* Foundation.framework in Frameworks */,
 				1CEFFD5816DA655B00CF2512 /* CoreGraphics.framework in Frameworks */,
@@ -73,6 +84,7 @@
 		1CEFFD5216DA655B00CF2512 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1CEFFD7616DA657500CF2512 /* CoreData.framework */,
 				1CEFFD5316DA655B00CF2512 /* UIKit.framework */,
 				1CEFFD5516DA655B00CF2512 /* Foundation.framework */,
 				1CEFFD5716DA655B00CF2512 /* CoreGraphics.framework */,
@@ -83,6 +95,9 @@
 		1CEFFD5916DA655B00CF2512 /* ZDo */ = {
 			isa = PBXGroup;
 			children = (
+				1CEFFD7816DA65A000CF2512 /* Resource */,
+				1CEFFD7916DA65AC00CF2512 /* Model */,
+				1CEFFD7A16DA65D700CF2512 /* Logic */,
 				1CEFFD6216DA655B00CF2512 /* AppDelegate.h */,
 				1CEFFD6316DA655B00CF2512 /* AppDelegate.m */,
 				1CEFFD6B16DA655B00CF2512 /* ViewController.h */,
@@ -98,6 +113,7 @@
 			children = (
 				1CEFFD5B16DA655B00CF2512 /* ZDo-Info.plist */,
 				1CEFFD5C16DA655B00CF2512 /* InfoPlist.strings */,
+				1CEFFD7E16DA66EE00CF2512 /* ZDo.xcdatamodeld */,
 				1CEFFD5F16DA655B00CF2512 /* main.m */,
 				1CEFFD6116DA655B00CF2512 /* ZDo-Prefix.pch */,
 				1CEFFD6516DA655B00CF2512 /* Default.png */,
@@ -105,6 +121,31 @@
 				1CEFFD6916DA655B00CF2512 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1CEFFD7816DA65A000CF2512 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resource;
+			sourceTree = "<group>";
+		};
+		1CEFFD7916DA65AC00CF2512 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1CEFFD8116DA674A00CF2512 /* Record.h */,
+				1CEFFD8216DA674A00CF2512 /* Record.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		1CEFFD7A16DA65D700CF2512 /* Logic */ = {
+			isa = PBXGroup;
+			children = (
+				1CEFFD7B16DA66B100CF2512 /* RecordLogic.h */,
+				1CEFFD7C16DA66B100CF2512 /* RecordLogic.m */,
+			);
+			name = Logic;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,6 +217,9 @@
 				1CEFFD6016DA655B00CF2512 /* main.m in Sources */,
 				1CEFFD6416DA655B00CF2512 /* AppDelegate.m in Sources */,
 				1CEFFD6D16DA655B00CF2512 /* ViewController.m in Sources */,
+				1CEFFD7D16DA66B100CF2512 /* RecordLogic.m in Sources */,
+				1CEFFD8016DA66EE00CF2512 /* ZDo.xcdatamodeld in Sources */,
+				1CEFFD8316DA674A00CF2512 /* Record.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,6 +344,19 @@
 			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		1CEFFD7E16DA66EE00CF2512 /* ZDo.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1CEFFD7F16DA66EE00CF2512 /* ZDo.xcdatamodel */,
+			);
+			currentVersion = 1CEFFD7F16DA66EE00CF2512 /* ZDo.xcdatamodel */;
+			path = ZDo.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 1CEFFD4816DA655B00CF2512 /* Project object */;
 }
