@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		06EEB1BE16DB3BE9001973E3 /* ZDLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EEB1BD16DB3BE9001973E3 /* ZDLoadingView.m */; };
+		1CBDE58F16DB9EE400FF8EA5 /* NoteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CBDE58E16DB9EE400FF8EA5 /* NoteCell.m */; };
+		1CBDE59116DB9F0E00FF8EA5 /* NoteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1CBDE59016DB9F0E00FF8EA5 /* NoteCell.xib */; };
 		1CEFFD5416DA655B00CF2512 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CEFFD5316DA655B00CF2512 /* UIKit.framework */; };
 		1CEFFD5616DA655B00CF2512 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CEFFD5516DA655B00CF2512 /* Foundation.framework */; };
 		1CEFFD5816DA655B00CF2512 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CEFFD5716DA655B00CF2512 /* CoreGraphics.framework */; };
@@ -26,9 +28,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		066426CB16DB62CD003DB1E5 /* ZDo 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ZDo 2.xcdatamodel"; sourceTree = "<group>"; };
+		066426CB16DB62CD003DB1E5 /* ZDo 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ZDo 2.xcdatamodel"; sourceTree = "<group>"; };
 		06EEB1BC16DB3BE9001973E3 /* ZDLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZDLoadingView.h; sourceTree = "<group>"; };
 		06EEB1BD16DB3BE9001973E3 /* ZDLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZDLoadingView.m; sourceTree = "<group>"; };
+		1CBDE58D16DB9EE400FF8EA5 /* NoteCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoteCell.h; sourceTree = "<group>"; };
+		1CBDE58E16DB9EE400FF8EA5 /* NoteCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteCell.m; sourceTree = "<group>"; };
+		1CBDE59016DB9F0E00FF8EA5 /* NoteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoteCell.xib; sourceTree = "<group>"; };
+		1CBDE59216DBB76E00FF8EA5 /* ZDo 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ZDo 3.xcdatamodel"; sourceTree = "<group>"; };
 		1CEFFD5016DA655B00CF2512 /* ZDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CEFFD5316DA655B00CF2512 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1CEFFD5516DA655B00CF2512 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -73,6 +79,9 @@
 			children = (
 				06EEB1BC16DB3BE9001973E3 /* ZDLoadingView.h */,
 				06EEB1BD16DB3BE9001973E3 /* ZDLoadingView.m */,
+				1CBDE58D16DB9EE400FF8EA5 /* NoteCell.h */,
+				1CBDE58E16DB9EE400FF8EA5 /* NoteCell.m */,
+				1CBDE59016DB9F0E00FF8EA5 /* NoteCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -218,6 +227,7 @@
 				1CEFFD6816DA655B00CF2512 /* Default@2x.png in Resources */,
 				1CEFFD6A16DA655B00CF2512 /* Default-568h@2x.png in Resources */,
 				1CEFFD7016DA655B00CF2512 /* ViewController.xib in Resources */,
+				1CBDE59116DB9F0E00FF8EA5 /* NoteCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -235,6 +245,7 @@
 				1CEFFD8016DA66EE00CF2512 /* ZDo.xcdatamodeld in Sources */,
 				1CEFFD8316DA674A00CF2512 /* Record.m in Sources */,
 				06EEB1BE16DB3BE9001973E3 /* ZDLoadingView.m in Sources */,
+				1CBDE58F16DB9EE400FF8EA5 /* NoteCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,7 +284,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: song john (7866M4AUKW)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: song john (7866M4AUKW)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -288,6 +300,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "5DF61CEB-B0FE-4D13-8163-BD15FDFFCF9F";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5DF61CEB-B0FE-4D13-8163-BD15FDFFCF9F";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -305,7 +319,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -313,6 +328,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -321,11 +338,15 @@
 		1CEFFD7416DA655B00CF2512 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ZDo/ZDo-Prefix.pch";
 				INFOPLIST_FILE = "ZDo/ZDo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -333,11 +354,15 @@
 		1CEFFD7516DA655B00CF2512 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ZDo/ZDo-Prefix.pch";
 				INFOPLIST_FILE = "ZDo/ZDo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -369,10 +394,11 @@
 		1CEFFD7E16DA66EE00CF2512 /* ZDo.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				1CBDE59216DBB76E00FF8EA5 /* ZDo 3.xcdatamodel */,
 				066426CB16DB62CD003DB1E5 /* ZDo 2.xcdatamodel */,
 				1CEFFD7F16DA66EE00CF2512 /* ZDo.xcdatamodel */,
 			);
-			currentVersion = 066426CB16DB62CD003DB1E5 /* ZDo 2.xcdatamodel */;
+			currentVersion = 1CBDE59216DBB76E00FF8EA5 /* ZDo 3.xcdatamodel */;
 			path = ZDo.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

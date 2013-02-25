@@ -18,4 +18,5 @@
 -(void)deleteRecord : (Record*)record;
 -(BOOL)createRecord : (NSString*)record;
 -(void)completeRecord : (Record *)record;
+-(void)refreshRecord : (Record*)record;
 @end

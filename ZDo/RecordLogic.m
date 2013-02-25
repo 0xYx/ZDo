@@ -33,6 +33,18 @@ static RecordLogic *sharedRecordLogic = nil;
     [self saveContext];
 }
 
+-(void)refreshRecord : (Record*)record{
+    NSString *predicate = [NSString stringWithFormat:@"createTime == %@",record.createTime];
+    [self enumerateClocks:predicate withAction:^(NSArray * result) {
+        for (Record * object in result) {
+            object.record = record.record;
+            object.createTime = [NSDate date];
+            [self saveContext];
+        }
+        
+    }];
+}
+
 -(void)completeRecord : (Record *)record{
     record.completeTime = [NSDate date];
     [self saveContext];
@@ -105,6 +117,22 @@ static RecordLogic *sharedRecordLogic = nil;
     
     return _persistentStoreCoordinator;
 }
+
+- (void) enumerateClocks:(NSString *) predicate withAction:(void(^)(NSArray * result))action {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"Record" inManagedObjectContext:self.managedObjectContext]];
+    [request setPredicate:[NSPredicate predicateWithFormat:predicate]];
+    NSError *error;
+    NSArray * result = [self.managedObjectContext executeFetchRequest:request error:&error];
+    
+    if(error) {
+        NSLog(@"%@", error);
+        return;
+    } else {
+        action(result);
+    }
+}
+
 
 #pragma mark -
 #pragma mark Application's Documents Directory
