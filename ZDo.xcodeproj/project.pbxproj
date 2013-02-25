@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		06EEB1BE16DB3BE9001973E3 /* ZDLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06EEB1BD16DB3BE9001973E3 /* ZDLoadingView.m */; };
 		1CEFFD5416DA655B00CF2512 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CEFFD5316DA655B00CF2512 /* UIKit.framework */; };
 		1CEFFD5616DA655B00CF2512 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CEFFD5516DA655B00CF2512 /* Foundation.framework */; };
 		1CEFFD5816DA655B00CF2512 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CEFFD5716DA655B00CF2512 /* CoreGraphics.framework */; };
@@ -25,6 +26,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		066426CB16DB62CD003DB1E5 /* ZDo 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ZDo 2.xcdatamodel"; sourceTree = "<group>"; };
+		06EEB1BC16DB3BE9001973E3 /* ZDLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZDLoadingView.h; sourceTree = "<group>"; };
+		06EEB1BD16DB3BE9001973E3 /* ZDLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZDLoadingView.m; sourceTree = "<group>"; };
 		1CEFFD5016DA655B00CF2512 /* ZDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CEFFD5316DA655B00CF2512 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		1CEFFD5516DA655B00CF2512 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -64,6 +68,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		06EEB1BB16DB3B84001973E3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				06EEB1BC16DB3BE9001973E3 /* ZDLoadingView.h */,
+				06EEB1BD16DB3BE9001973E3 /* ZDLoadingView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		1CEFFD4716DA655B00CF2512 = {
 			isa = PBXGroup;
 			children = (
@@ -96,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				1CEFFD7816DA65A000CF2512 /* Resource */,
+				06EEB1BB16DB3B84001973E3 /* Views */,
 				1CEFFD7916DA65AC00CF2512 /* Model */,
 				1CEFFD7A16DA65D700CF2512 /* Logic */,
 				1CEFFD6216DA655B00CF2512 /* AppDelegate.h */,
@@ -220,6 +234,7 @@
 				1CEFFD7D16DA66B100CF2512 /* RecordLogic.m in Sources */,
 				1CEFFD8016DA66EE00CF2512 /* ZDo.xcdatamodeld in Sources */,
 				1CEFFD8316DA674A00CF2512 /* Record.m in Sources */,
+				06EEB1BE16DB3BE9001973E3 /* ZDLoadingView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,6 +264,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -280,6 +296,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -307,6 +324,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ZDo/ZDo-Prefix.pch";
 				INFOPLIST_FILE = "ZDo/ZDo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -318,6 +336,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ZDo/ZDo-Prefix.pch";
 				INFOPLIST_FILE = "ZDo/ZDo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -342,6 +361,7 @@
 				1CEFFD7516DA655B00CF2512 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
@@ -349,9 +369,10 @@
 		1CEFFD7E16DA66EE00CF2512 /* ZDo.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				066426CB16DB62CD003DB1E5 /* ZDo 2.xcdatamodel */,
 				1CEFFD7F16DA66EE00CF2512 /* ZDo.xcdatamodel */,
 			);
-			currentVersion = 1CEFFD7F16DA66EE00CF2512 /* ZDo.xcdatamodel */;
+			currentVersion = 066426CB16DB62CD003DB1E5 /* ZDo 2.xcdatamodel */;
 			path = ZDo.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

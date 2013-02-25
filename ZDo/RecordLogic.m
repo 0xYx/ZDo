@@ -19,13 +19,13 @@ static RecordLogic *sharedRecordLogic = nil;
 }
 
 -(NSArray *)recordList{
-    NSSortDescriptor *sortDescriptor;
-    sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createTime"
-                                                 ascending:NO];
-    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-    NSArray *sortedArray;
-    sortedArray = [[self fetchRecordList] sortedArrayUsingDescriptors:sortDescriptors];
-    return sortedArray;
+//    NSSortDescriptor *sortDescriptor;
+//    sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createTime"
+//                                                 ascending:NO];
+//    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+//    NSArray *sortedArray;
+//    sortedArray = [[self fetchRecordList] sortedArrayUsingDescriptors:sortDescriptors];
+    return [self fetchRecordList];
 }
 
 -(void)deleteRecord : (Record*)record{
@@ -34,7 +34,7 @@ static RecordLogic *sharedRecordLogic = nil;
 }
 
 -(void)completeRecord : (Record *)record{
-    record.completeTime = [self currentTimeInterval];
+    record.completeTime = [NSDate date];
     [self saveContext];
 }
 
@@ -42,11 +42,9 @@ static RecordLogic *sharedRecordLogic = nil;
     if (!record) {
         return NO;
     }
-    NSNumber *createTime = [self currentTimeInterval];
     Record *recordObject = [NSEntityDescription insertNewObjectForEntityForName:@"Record" inManagedObjectContext:self.managedObjectContext];
     recordObject.record = record;
-    recordObject.createTime = createTime;
-    recordObject.completeTime = 0;
+    recordObject.createTime = [NSDate date];
     [self saveContext];
     return YES;
 }
@@ -90,13 +88,17 @@ static RecordLogic *sharedRecordLogic = nil;
     }
     
     NSString *storeType = NSSQLiteStoreType;
-    NSString *storeName = @"cdToDo.sqlite";
+    NSString *storeName = @"cdNBA.sqlite";
     
     NSError *error = NULL;
     NSURL *storeURL = [NSURL fileURLWithPath:[[self applicationDocumentsDirectory] stringByAppendingPathComponent:storeName]];
     
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
+                             [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
+    
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:self.managedObjectModel];
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:storeType configuration:nil URL:storeURL options:nil error:&error]) {
+    if (![_persistentStoreCoordinator addPersistentStoreWithType:storeType configuration:nil URL:storeURL options:options error:&error]) {
         NSLog(@"Error : %@\n", [error localizedDescription]);
         NSAssert1(YES, @"Failed to create store %@ with NSSQLiteStoreType", [storeURL path]);
     }
@@ -123,7 +125,10 @@ static RecordLogic *sharedRecordLogic = nil;
 {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     [fetchRequest setEntity:[NSEntityDescription entityForName:@"Record" inManagedObjectContext:self.managedObjectContext]];
-    
+    NSSortDescriptor *sortDescriptor1 = [[NSSortDescriptor alloc] initWithKey:@"createTime" ascending:NO];
+    NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"completeTime" ascending:YES];
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor2,sortDescriptor1, nil];
+    [fetchRequest setSortDescriptors:sortDescriptors];
     NSError *error = NULL;
     NSArray *array = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
     

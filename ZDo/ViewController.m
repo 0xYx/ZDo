@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import <CoreData/CoreData.h>
 #import "Record.h"
-
+#import "ZDLoadingView.h"
 @interface ViewController (){
     CGFloat scrollViewOffSet_y;
 }
@@ -75,6 +75,9 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     Record *record = [[self.recordLogic recordList] objectAtIndex:indexPath.row];
     [self.recordLogic completeRecord:record];
+    [self.tableView reloadData];
+//    ZDLoadingView *view = [[ZDLoadingView alloc]init];
+//    [view start];
 }
 
 

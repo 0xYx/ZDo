@@ -12,9 +12,9 @@
 
 @interface Record : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * completeTime;
-@property (nonatomic, retain) NSNumber * createTime;
-@property (nonatomic, retain) NSNumber * expireTime;
+@property (nonatomic, retain) NSDate * completeTime;
+@property (nonatomic, retain) NSDate * createTime;
+@property (nonatomic, retain) NSDate * expireTime;
 @property (nonatomic, retain) NSString * record;
 
 @end
