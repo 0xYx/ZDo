@@ -11,6 +11,7 @@
 #import "Record.h"
 static RecordLogic *sharedRecordLogic = nil;
 @implementation RecordLogic
+@synthesize fetchedResultsController = _fetchedResultsController;
 +(RecordLogic *)sharedRecordLogic{
     if(sharedRecordLogic == nil){
         sharedRecordLogic = [[super allocWithZone:NULL] init];
@@ -33,16 +34,15 @@ static RecordLogic *sharedRecordLogic = nil;
     [self saveContext];
 }
 
--(void)refreshRecord : (Record*)record{
-    NSString *predicate = [NSString stringWithFormat:@"createTime == %@",record.createTime];
+-(void)refreshRecord : (Record*)record newNote : (NSString *)note{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"createTime == %@",record.createTime];
     [self enumerateClocks:predicate withAction:^(NSArray * result) {
         for (Record * object in result) {
-            object.record = record.record;
-            object.createTime = [NSDate date];
-            [self saveContext];
+            object.record = note;
         }
-        
+        [self saveContext];
     }];
+
 }
 
 -(void)completeRecord : (Record *)record{
@@ -100,7 +100,7 @@ static RecordLogic *sharedRecordLogic = nil;
     }
     
     NSString *storeType = NSSQLiteStoreType;
-    NSString *storeName = @"cdNBA.sqlite";
+    NSString *storeName = @"ZDo.sqlite";
     
     NSError *error = NULL;
     NSURL *storeURL = [NSURL fileURLWithPath:[[self applicationDocumentsDirectory] stringByAppendingPathComponent:storeName]];
@@ -118,10 +118,10 @@ static RecordLogic *sharedRecordLogic = nil;
     return _persistentStoreCoordinator;
 }
 
-- (void) enumerateClocks:(NSString *) predicate withAction:(void(^)(NSArray * result))action {
+- (void) enumerateClocks:(NSPredicate *) predicate withAction:(void(^)(NSArray * result))action {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:[NSEntityDescription entityForName:@"Record" inManagedObjectContext:self.managedObjectContext]];
-    [request setPredicate:[NSPredicate predicateWithFormat:predicate]];
+    [request setPredicate:predicate];
     NSError *error;
     NSArray * result = [self.managedObjectContext executeFetchRequest:request error:&error];
     
@@ -133,6 +133,34 @@ static RecordLogic *sharedRecordLogic = nil;
     }
 }
 
+#pragma mark -
+#pragma mark - NSFetchedResultsController
+
+- (NSFetchedResultsController *)fetchedResultsController
+{
+    if (nil != _fetchedResultsController) {
+        return _fetchedResultsController;
+    }
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *playerEntity = [NSEntityDescription entityForName:@"Record" inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:playerEntity];
+    NSSortDescriptor *sortDescriptor1 = [[NSSortDescriptor alloc] initWithKey:@"createTime" ascending:NO];
+    NSSortDescriptor *sortDescriptor2 = [[NSSortDescriptor alloc] initWithKey:@"completeTime" ascending:YES];
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:sortDescriptor2,sortDescriptor1, nil];
+    [fetchRequest setSortDescriptors:sortDescriptors];
+
+    _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Record"];
+
+    
+    NSError *error = NULL;
+    if (![_fetchedResultsController performFetch:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+    return _fetchedResultsController;
+}
 
 #pragma mark -
 #pragma mark Application's Documents Directory

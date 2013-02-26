@@ -16,10 +16,14 @@
     CGFloat scrollViewOffSet_y;
     NSIndexPath *selectedIndex;
 }
+@property (nonatomic,strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic,strong) NSManagedObjectContext *managedObjectContext;
 
 @end
 
 @implementation ViewController
+@synthesize fetchedResultsController = __fetchedResultsController;
+@synthesize managedObjectContext;
 
 - (void)viewDidLoad
 {
@@ -44,8 +48,19 @@
     // Dispose of any resources that can be recreated.
 }
 #pragma  mark UITableViewDelegate
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [[self.recordLogic recordList] count];
+    NSArray *sections = [self.fetchedResultsController sections];
+    if(sections != nil && [sections count] > 0){
+        id <NSFetchedResultsSectionInfo> sectionInfo = [sections objectAtIndex:section];
+        return [sectionInfo numberOfObjects];
+    }else{
+        return 0;
+    }
 }
 
 -(UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -55,7 +70,7 @@
         cell = (NoteCell *)[[[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil] lastObject];
         cell.delegate = self;
     }
-    Record *record = [[self.recordLogic recordList] objectAtIndex:indexPath.row];
+    Record *record = (Record*)[self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textField.text = record.record;
     return cell;
 }
@@ -69,15 +84,15 @@
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-    Record *record = [[self.recordLogic recordList] objectAtIndex:indexPath.row];
+     Record *record = (Record*)[self.fetchedResultsController objectAtIndexPath:indexPath];
     [self.recordLogic deleteRecord:record];
-    [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+//    [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
 }
 
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 #pragma mark textFieldDelegate
 
@@ -91,7 +106,7 @@
     if (textField.text != nil&&![textField.text isEqualToString:@""]){
         [self.recordLogic createRecord:textField.text];
         [self.tableView setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
-        [self.tableView reloadData];
+//        [self.tableView reloadData];
         
     }else{
         [UIView animateWithDuration:0.3 animations:^{
@@ -117,8 +132,8 @@
     [UIView animateWithDuration:0.3 animations:^{
         [self.tableView setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
     }];
-//    Record *record = [[self.recordLogic recordList] objectAtIndex:selectedIndex.row];
-//    [self.recordLogic refreshRecord:record];
+     Record *record = (Record*)[self.fetchedResultsController objectAtIndexPath:selectedIndex];
+    [self.recordLogic refreshRecord:record newNote:note];
 
 }
 
@@ -139,6 +154,69 @@
         self.textField.hidden=  YES;
     }
 }
+
+#pragma mark - Fetched results controller
+- (NSFetchedResultsController *)fetchedResultsController
+{
+    if (__fetchedResultsController == nil) {
+        __fetchedResultsController = [self.recordLogic fetchedResultsController];
+        __fetchedResultsController.delegate = self;
+    }
+    return __fetchedResultsController;
+}
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.tableView beginUpdates];
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
+           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
+{
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationLeft];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+}
+
+
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath
+{
+
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
+            break;
+        case NSFetchedResultsChangeDelete:
+            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:{
+            
+         
+            break;
+        }
+        case NSFetchedResultsChangeMove:
+
+            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
+            break;
+    }
+    
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller{
+    [self.tableView endUpdates];
+}
+
 
 
 

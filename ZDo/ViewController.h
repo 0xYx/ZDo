@@ -9,11 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "RecordLogic.h"
 #import "NoteCell.h"
-@interface ViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,NoteCellDelgate>
+@interface ViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,NoteCellDelgate,NSFetchedResultsControllerDelegate>
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
-@property (nonatomic, strong) NSManagedObjectModel *managedObjectModel;
-@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (nonatomic, strong) UITextField *textField;
 @property (nonatomic, strong) RecordLogic *recordLogic;
 @end
