@@ -19,9 +19,14 @@
     return self;
 }
 
+-(IBAction)frontBtnClicked:(id)sender{
+    [self.textField becomeFirstResponder];
+}
 
 #pragma mark TextFieldDelegate
 -(void) textFieldDidBeginEditing:(UITextField *)textField{
+
+    
     [self.delegate didSelectedNoteCell:self];
 }
 

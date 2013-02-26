@@ -15,6 +15,9 @@
 
 @interface NoteCell : UITableViewCell<UITextFieldDelegate>
 @property (nonatomic, strong) IBOutlet UITextField *textField;
+@property (nonatomic, strong) IBOutlet UIButton *frontBtn;
+-(IBAction)frontBtnClicked:(id)sender;
 @property (nonatomic)CGFloat cellHeight;
 @property (nonatomic, unsafe_unretained) id<NoteCellDelgate> delegate;
+
 @end
