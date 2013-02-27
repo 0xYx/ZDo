@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "RecordLogic.h"
 #import "NoteCell.h"
-@interface ViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,NoteCellDelgate,NSFetchedResultsControllerDelegate>
+@interface ViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,NoteCellDelgate,NSFetchedResultsControllerDelegate,UIGestureRecognizerDelegate>
 @property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) UITextField *textField;
 @property (nonatomic, strong) RecordLogic *recordLogic;

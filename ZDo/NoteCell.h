@@ -10,14 +10,18 @@
 
 -(void)didSelectedNoteCell : (NoteCell*)cell;
 -(void)didEndEditNoteCell : (NoteCell *)cell note : (NSString*)note;
+-(void)didEndDeleteAnimate : (NoteCell *)cell;
+-(void)didEndCompleteAnimate:(NoteCell *)cell;
 @end
 #import <UIKit/UIKit.h>
 
-@interface NoteCell : UITableViewCell<UITextFieldDelegate>
+@interface NoteCell : UITableViewCell<UITextFieldDelegate>{
+    CGPoint textFieldCenter;
+}
 @property (nonatomic, strong) IBOutlet UITextField *textField;
-@property (nonatomic, strong) IBOutlet UIButton *frontBtn;
--(IBAction)frontBtnClicked:(id)sender;
 @property (nonatomic)CGFloat cellHeight;
 @property (nonatomic, unsafe_unretained) id<NoteCellDelgate> delegate;
 
+-(void)beginCompleteAnimation;
+-(void)beginDeleteAnimation;
 @end

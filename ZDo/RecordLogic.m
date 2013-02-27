@@ -47,7 +47,7 @@ static RecordLogic *sharedRecordLogic = nil;
 
 -(void)completeRecord : (Record *)record{
     record.completeTime = [NSDate date];
-    [self saveContext];
+    [self refreshRecord:record newNote:record.record];
 }
 
 -(BOOL)createRecord : (NSString*)record{

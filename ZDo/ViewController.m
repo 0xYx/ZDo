@@ -69,6 +69,14 @@
     if (!cell) {
         cell = (NoteCell *)[[[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil] lastObject];
         cell.delegate = self;
+        UISwipeGestureRecognizer *swipleft =[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwip:)];
+        [swipleft setDirection:UISwipeGestureRecognizerDirectionLeft];
+        [swipleft setDelegate:self];
+        [cell addGestureRecognizer:swipleft];
+        UISwipeGestureRecognizer *swipRight =[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwip:)];
+        [swipRight setDirection:UISwipeGestureRecognizerDirectionRight];
+        [swipRight setDelegate:self];
+        [cell addGestureRecognizer:swipRight];
     }
     Record *record = (Record*)[self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textField.text = record.record;
@@ -79,21 +87,35 @@
     return CellHeight;
 }
 
--(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return UITableViewCellEditingStyleDelete;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-     Record *record = (Record*)[self.fetchedResultsController objectAtIndexPath:indexPath];
-    [self.recordLogic deleteRecord:record];
-//    [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
-}
-
-
+//-(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    return UITableViewCellEditingStyleDelete;
+//}
+//
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+//     Record *record = (Record*)[self.fetchedResultsController objectAtIndexPath:indexPath];
+//    [self.recordLogic deleteRecord:record];
+////    [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+//}
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark UIGestureRecognizerMethod
+-(void)handleSwip : (UISwipeGestureRecognizer*)recognizer{
+    NoteCell *cell = [self getNoteCell:recognizer];
+    if (recognizer.direction == UISwipeGestureRecognizerDirectionLeft) {
+        [cell beginCompleteAnimation];
+    }else{
+        [cell beginDeleteAnimation];
+    }
+}
+
+-(NoteCell*) getNoteCell : (UISwipeGestureRecognizer*)recognizer{
+    CGPoint point = [recognizer locationOfTouch:0 inView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
+    return (NoteCell*)[self.tableView cellForRowAtIndexPath:indexPath];
 }
 #pragma mark textFieldDelegate
 
@@ -136,6 +158,18 @@
      Record *record = (Record*)[self.fetchedResultsController objectAtIndexPath:selectedIndex];
     [self.recordLogic refreshRecord:record newNote:note];
 
+}
+
+-(void)didEndDeleteAnimate:(NoteCell *)cell{
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    Record *record = (Record*)[self.fetchedResultsController objectAtIndexPath:indexPath];
+    [self.recordLogic deleteRecord:record];
+}
+
+-(void)didEndCompleteAnimate:(NoteCell *)cell{
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    Record *record = (Record*)[self.fetchedResultsController objectAtIndexPath:indexPath];
+    [self.recordLogic completeRecord:record];
 }
 
 #pragma mark scrollView Delegate
@@ -208,7 +242,7 @@
         case NSFetchedResultsChangeMove:
 
             [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationLeft];
             break;
     }
     
