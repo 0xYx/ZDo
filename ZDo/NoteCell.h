@@ -24,4 +24,6 @@
 
 -(void)beginCompleteAnimation;
 -(void)beginDeleteAnimation;
+-(void)resetTextFieldCenter;
+
 @end

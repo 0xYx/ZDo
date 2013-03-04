@@ -15,6 +15,7 @@
 @interface ViewController (){
     CGFloat scrollViewOffSet_y;
     NSIndexPath *selectedIndex;
+    NoteCell *currentCell;
 }
 @property (nonatomic,strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic,strong) NSManagedObjectContext *managedObjectContext;
@@ -69,14 +70,9 @@
     if (!cell) {
         cell = (NoteCell *)[[[NSBundle mainBundle] loadNibNamed:CellIdentifier owner:self options:nil] lastObject];
         cell.delegate = self;
-        UISwipeGestureRecognizer *swipleft =[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwip:)];
-        [swipleft setDirection:UISwipeGestureRecognizerDirectionLeft];
-        [swipleft setDelegate:self];
-        [cell addGestureRecognizer:swipleft];
-        UISwipeGestureRecognizer *swipRight =[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwip:)];
-        [swipRight setDirection:UISwipeGestureRecognizerDirectionRight];
-        [swipRight setDelegate:self];
-        [cell addGestureRecognizer:swipRight];
+        UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handlePan:)];
+        [pan setDelegate:self];
+        [cell addGestureRecognizer:pan];
     }
     Record *record = (Record*)[self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textField.text = record.record;
@@ -112,7 +108,35 @@
     }
 }
 
--(NoteCell*) getNoteCell : (UISwipeGestureRecognizer*)recognizer{
+-(void)handlePan: (UIGestureRecognizer *)recognizer{
+    UIPanGestureRecognizer *panRecognizer = (UIPanGestureRecognizer*)recognizer;
+    CGPoint _originalLocation; // 原始位置
+    CGPoint _currentLocation; // 当前位置
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        _originalLocation = [panRecognizer locationInView:self.tableView];
+       _currentLocation = _originalLocation;
+        currentCell = [self getNoteCell:recognizer];
+    }
+        else if (recognizer.state == UIGestureRecognizerStateChanged) {
+//            //这部分是拖拽)
+            _currentLocation = [panRecognizer locationInView:self.tableView];
+            currentCell.textField.center = CGPointMake(_currentLocation.x,currentCell.textField.center.y);
+            [panRecognizer setTranslation:CGPointMake(0, 0) inView:currentCell];
+            } else if (recognizer.state == UIGestureRecognizerStateEnded ||
+                           recognizer.state == UIGestureRecognizerStateCancelled) {
+                CGSize textSize = [self.textField.text sizeWithFont:self.textField.font];
+                if (currentCell.textField.frame.origin.x>=140) {
+                    [currentCell beginDeleteAnimation];
+                }else if (currentCell.textField.frame.origin.x<=-textSize.width+20){
+                    [currentCell beginCompleteAnimation];
+                }else{
+                    [currentCell resetTextFieldCenter];
+                }
+            }
+    
+}
+
+-(NoteCell*) getNoteCell : (UIGestureRecognizer*)recognizer{
     CGPoint point = [recognizer locationOfTouch:0 inView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
     return (NoteCell*)[self.tableView cellForRowAtIndexPath:indexPath];
@@ -240,7 +264,6 @@
             break;
         }
         case NSFetchedResultsChangeMove:
-
             [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
             [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]withRowAnimation:UITableViewRowAnimationLeft];
             break;

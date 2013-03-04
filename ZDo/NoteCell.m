@@ -28,7 +28,6 @@
         [self.textField setCenter:CGPointMake(self.textField.center.x-textSize.width-8, self.textField.center.y)];
     }completion:^(BOOL finished) {
         [self.delegate didEndCompleteAnimate:self];
-        [self performSelector:@selector(resetTextFieldCenter) withObject:nil afterDelay:0.3];
     }];
     
 }
@@ -43,7 +42,10 @@
 }
 
 -(void)resetTextFieldCenter{
-    [self.textField setCenter:textFieldCenter];
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.textField setCenter:self.center];
+        
+    }];
 }
 
 #pragma mark TextFieldDelegate
